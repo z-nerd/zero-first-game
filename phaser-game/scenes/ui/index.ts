@@ -59,8 +59,8 @@ export class UIScene extends Scene {
   private initButton(): void {
     var btnUp = Button({
       style: {
-        width: '30px',
-        height: '30px',
+        width: '53px',
+        height: '53px',
         color: 'red',
         background: 'url(assets/ui/up.png)',
         backgroundSize: '50% 50%',
@@ -72,8 +72,8 @@ export class UIScene extends Scene {
 
     var btnDown = Button({
       style: {
-        width: '30px',
-        height: '30px',
+        width: '53px',
+        height: '53px',
         color: 'red',
         background: 'url(assets/ui/down.png)',
         backgroundSize: '50% 50%',
@@ -85,8 +85,8 @@ export class UIScene extends Scene {
 
     var btnRight = Button({
       style: {
-        width: '30px',
-        height: '30px',
+        width: '53px',
+        height: '53px',
         color: 'red',
         background: 'url(assets/ui/right.png)',
         backgroundSize: '50% 50%',
@@ -99,8 +99,8 @@ export class UIScene extends Scene {
 
     var btnLeft = Button({
       style: {
-        width: '30px',
-        height: '30px',
+        width: '53px',
+        height: '53px',
         color: 'red',
         background: 'url(assets/ui/left.png)',
         backgroundSize: '50% 50%',
@@ -112,8 +112,8 @@ export class UIScene extends Scene {
 
     var btnAttack = Button({
       style: {
-        width: '30px',
-        height: '30px',
+        width: '53px',
+        height: '53px',
         color: 'red',
         background: 'url(assets/ui/attack.png)',
         backgroundSize: '50% 50%',
