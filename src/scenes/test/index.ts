@@ -1,9 +1,9 @@
-import { GameObjects, Scene } from 'phaser';
+import { Scene } from 'phaser';
 import { Button } from '../../dom';
 
 export class TestScene extends Scene {
-    private button: any;
-    private background: any;
+    button: any;
+    background: any;
 
     constructor() {
         super('test-scene');

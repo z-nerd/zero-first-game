@@ -3,23 +3,22 @@ import { Enemy } from '../../classes/enemy';
 import { Player } from '../../classes/player';
 import { Text } from '../../classes/text';
 import { EVENTS_NAME } from '../../consts';
-import { Button } from '../../dom';
 import { gameObjectsToObjectPoints } from '../../helpers/gameobject-to-object-point';
 export class Level1 extends Scene {
-  private chests!: Phaser.GameObjects.Sprite[];
-  private player!: Player;
-  private enemies!: Enemy[];
-  private map!: Tilemaps.Tilemap;
-  private tileset!: Tilemaps.Tileset;
-  private wallsLayer!: Tilemaps.TilemapLayer;
-  private plantsLayer!: Tilemaps.TilemapLayer;
-  private groundLayer!: Tilemaps.TilemapLayer;
+  chests!: Phaser.GameObjects.Sprite[];
+  player!: Player;
+  enemies!: Enemy[];
+  map!: Tilemaps.Tilemap;
+  tileset!: Tilemaps.Tileset;
+  wallsLayer!: Tilemaps.TilemapLayer;
+  plantsLayer!: Tilemaps.TilemapLayer;
+  groundLayer!: Tilemaps.TilemapLayer;
 
   constructor() {
     super('level-1-scene');
   }
 
-  private showDebugWalls(): void {
+  showDebugWalls(): void {
     const debugGraphics = this.add.graphics().setAlpha(0.7);
     this.wallsLayer.renderDebug(debugGraphics, {
       tileColor: null,
@@ -27,7 +26,7 @@ export class Level1 extends Scene {
     });
   }
 
-  private initListeners(): void {
+  initListeners(): void {
     this.game.events.on(EVENTS_NAME.btnUpDown, this.player.btnUpDownHandler, this);
     this.game.events.on(EVENTS_NAME.btnUpUp, this.player.btnUpUpHandler, this);
 
@@ -43,16 +42,16 @@ export class Level1 extends Scene {
     this.game.events.on(EVENTS_NAME.btnAttack, this.player.btnAttackHandler, this);
   }
 
-  private initMap(): void {
+  initMap(): void {
     this.map = this.make.tilemap({ key: 'dungeon', tileWidth: 16, tileHeight: 16 });
-    this.tileset = this.map.addTilesetImage('dungeon', 'tiles');
+    this.tileset = this.map.addTilesetImage('dungeon', 'tiles') as any;
 
-    this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0);
-    this.wallsLayer = this.map.createLayer('Walls', this.tileset, 0, 0);
+    this.groundLayer = this.map.createLayer('Ground', this.tileset, 0, 0) as any;
+    this.wallsLayer = this.map.createLayer('Walls', this.tileset, 0, 0) as any;
     this.wallsLayer.setCollisionByProperty({ collides: true });
     this.physics.world.setBounds(0, 0, this.wallsLayer.width, this.wallsLayer.height);
 
-    this.plantsLayer = this.map.createLayer('Plants', this.tileset, 0, 0);
+    this.plantsLayer = this.map.createLayer('Plants', this.tileset, 0, 0) as any;
     this.plantsLayer.setCollisionByProperty({ collides: true });
     this.physics.world.setBounds(0, 0, this.plantsLayer.width, this.plantsLayer.height);
     this.plantsLayer.setScale(0.5);
@@ -62,15 +61,15 @@ export class Level1 extends Scene {
     this.showDebugWalls();
   }
 
-  private initChests(): void {
+  initChests(): void {
     const chestPoints = gameObjectsToObjectPoints(
-      this.map?.filterObjects('Chests', obj => obj.name === 'ChestPoint'),
+      this.map?.filterObjects('Chests', obj => obj.name === 'ChestPoint') as any,
     );
     this.chests = chestPoints.map(chestPoint =>
       this.physics.add.sprite(chestPoint.x, chestPoint.y, 'tiles_spr', 595).setScale(1.5),
     );
     this.chests.forEach(chest => {
-      this.physics.add.overlap(this.player, chest, (obj1, obj2) => {
+      this.physics.add.overlap(this.player, chest, (_obj1, obj2) => {
         this.game.events.emit(EVENTS_NAME.chestLoot);
         obj2.destroy();
         this.cameras.main.flash();
@@ -78,15 +77,15 @@ export class Level1 extends Scene {
     });
   }
 
-  private initCamera(): void {
+  initCamera(): void {
     this.cameras.main.setSize(this.game.scale.width, this.game.scale.height);
     this.cameras.main.startFollow(this.player, true, 0.09, 0.09);
     this.cameras.main.setZoom(2.2);
   }
 
-  private initEnemies(): void {
+  initEnemies(): void {
     const enemiesPoints = gameObjectsToObjectPoints(
-      this.map.filterObjects('Enemies', (obj) => obj.name === 'EnemyPoint'),
+      this.map.filterObjects('Enemies', (obj: any) => obj.name === 'EnemyPoint' ) as any,
     );
     this.enemies = enemiesPoints.map((enemyPoint) =>
       new Enemy(this, enemyPoint.x, enemyPoint.y, 'tiles_spr', this.player, 503)
@@ -95,12 +94,12 @@ export class Level1 extends Scene {
     );
     this.physics.add.collider(this.enemies, this.wallsLayer);
     this.physics.add.collider(this.enemies, this.enemies);
-    this.physics.add.collider(this.player, this.enemies, (obj1, obj2) => {
+    this.physics.add.collider(this.player, this.enemies, (obj1, _obj2) => {
       (obj1 as Player).getDamage(1);
     });
   }
 
-  private initPlayer(): void {
+  initPlayer(): void {
     this.player = new Player(this, 150, 150);
     this.physics.add.collider(this.player, this.wallsLayer);
     this.physics.add.collider(this.player, this.plantsLayer);

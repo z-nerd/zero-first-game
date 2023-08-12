@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "jsx-dom";
+import { CSSProperties } from "jsx-dom";
 
 interface ButtonProps {
     style: CSSProperties;

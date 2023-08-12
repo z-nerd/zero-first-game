@@ -1,29 +1,32 @@
-import { EVENTS_NAME, GameStatus,  } from '../consts';
+import { EVENTS_NAME, GameStatus, } from '../consts';
 import { Actor } from './actor';
 import { Text } from './text';
 export class Player extends Actor {
-  private hpValue: Text;
-  private keyW: Phaser.Input.Keyboard.Key;
-  private keyA: Phaser.Input.Keyboard.Key;
-  private keyS: Phaser.Input.Keyboard.Key;
-  private keyD: Phaser.Input.Keyboard.Key;
-  private keySpace: Phaser.Input.Keyboard.Key;
+  hpValue: Text;
+  keyW: Phaser.Input.Keyboard.Key;
+  keyA: Phaser.Input.Keyboard.Key;
+  keyS: Phaser.Input.Keyboard.Key;
+  keyD: Phaser.Input.Keyboard.Key;
+  keySpace: Phaser.Input.Keyboard.Key;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'king');
+    if (!this.scene?.input?.keyboard)
+      throw Error(`Can't get keyboard input!`);
+
     // KEYS
-    this.keyW = this.scene.input.keyboard.addKey('W');
-    this.keyA = this.scene.input.keyboard.addKey('A');
-    this.keyS = this.scene.input.keyboard.addKey('S');
-    this.keyD = this.scene.input.keyboard.addKey('D');
-    this.keySpace = this.scene.input.keyboard.addKey(32);
+    this.keyW = this.scene?.input?.keyboard.addKey('W');
+    this.keyA = this.scene?.input?.keyboard?.addKey('A');
+    this.keyS = this.scene?.input?.keyboard?.addKey('S');
+    this.keyD = this.scene?.input?.keyboard?.addKey('D');
+    this.keySpace = this.scene?.input?.keyboard?.addKey(32);
     // PHYSICS
     this.getBody().setSize(30, 30);
     this.getBody().setOffset(8, 0);
 
     this.hpValue = new Text(this.scene, this.x, this.y - this.height, this.hp.toString())
-    .setFontSize(12)
-    .setOrigin(0.8, 0.5);
+      .setFontSize(12)
+      .setOrigin(0.8, 0.5);
 
     this.initAnimations();
 
@@ -41,11 +44,11 @@ export class Player extends Actor {
   }
 
   public btnUpUpHandler(): void {
-      window.dispatchEvent(new KeyboardEvent('keyup', {
-        key: "w",
-        keyCode: 87,
-        which: 87,
-      }));
+    window.dispatchEvent(new KeyboardEvent('keyup', {
+      key: "w",
+      keyCode: 87,
+      which: 87,
+    }));
   }
 
   public btnDownDownHandler(): void {
@@ -57,11 +60,11 @@ export class Player extends Actor {
   }
 
   public btnDownUpHandler(): void {
-      window.dispatchEvent(new KeyboardEvent('keyup', {
-        key: "s",
-        keyCode: 83,
-        which: 83,
-      }));
+    window.dispatchEvent(new KeyboardEvent('keyup', {
+      key: "s",
+      keyCode: 83,
+      which: 83,
+    }));
   }
 
   public btnRightDownHandler(): void {
@@ -72,11 +75,11 @@ export class Player extends Actor {
     }));
   }
   public btnRightUpHandler(): void {
-      window.dispatchEvent(new KeyboardEvent('keyup', {
-        key: "d",
-        keyCode: 68,
-        which: 68,
-      }));
+    window.dispatchEvent(new KeyboardEvent('keyup', {
+      key: "d",
+      keyCode: 68,
+      which: 68,
+    }));
   }
 
   public btnLeftDownHandler(): void {
@@ -111,7 +114,7 @@ export class Player extends Actor {
     }, 20);
   }
 
-  private initAnimations(): void {
+  initAnimations(): void {
     this.scene.anims.create({
       key: 'run',
       frames: this.scene.anims.generateFrameNames('a-king', {
@@ -128,10 +131,12 @@ export class Player extends Actor {
       }),
       frameRate: 8,
     });
-	}
+  }
 
   update(): void {
     this.getBody().setVelocity(0);
+    if (!this.body) throw Error(`Can't get Body!`);
+
     if (this.keyW?.isDown) {
       this.body.velocity.y = -110;
       !this.anims.isPlaying && this.anims.play('run', true);
@@ -161,7 +166,7 @@ export class Player extends Actor {
     // this.keySpace.on('down', (event: KeyboardEvent) => {
     //   this.anims.play('attack', true);
     //   console.log('zero');
-      
+
     //   this.scene.game.events.emit(EVENTS_NAME.attack);
     // });
 

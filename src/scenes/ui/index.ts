@@ -2,17 +2,17 @@ import { Scene, GameObjects } from 'phaser';
 import { Score, ScoreOperations } from '../../classes/score';
 import { Text } from '../../classes/text';
 import { EVENTS_NAME, GameStatus } from '../../consts';
-import { GameConfig } from '../..';
+import { GameConfig } from '../../main';
 import { Button } from '../../dom';
 export class UIScene extends Scene {
-  private chestLootHandler: () => void;
-  private score!: Score;
-  private gameEndPhrase!: Text;
-  private gameEndHandler: (status: GameStatus) => void;
-  private btnUp!: GameObjects.DOMElement;
-  private btnDown!: GameObjects.DOMElement;
-  private btnLeft!: GameObjects.DOMElement;
-  private btnRight!: GameObjects.DOMElement;
+  chestLootHandler: () => void;
+  score!: Score;
+  gameEndPhrase!: Text;
+  gameEndHandler: (status: GameStatus) => void;
+  btnUp!: GameObjects.DOMElement;
+  btnDown!: GameObjects.DOMElement;
+  btnLeft!: GameObjects.DOMElement;
+  btnRight!: GameObjects.DOMElement;
   
   constructor() {
     super('ui-scene');
@@ -51,12 +51,12 @@ export class UIScene extends Scene {
     };
   }
 
-  private initListeners(): void {
+  initListeners(): void {
     this.game.events.on(EVENTS_NAME.chestLoot, this.chestLootHandler, this);
     this.game.events.once(EVENTS_NAME.gameEnd, this.gameEndHandler, this);
   }
 
-  private initButton(): void {
+  initButton(): void {
     var btnUp = Button({
       style: {
         width: '53px',

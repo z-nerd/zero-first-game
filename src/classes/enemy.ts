@@ -1,11 +1,10 @@
-import { Math, Scene } from 'phaser';
 import { EVENTS_NAME } from '../consts';
 import { Actor } from './actor';
 import { Player } from './player';
 export class Enemy extends Actor {
-    private target: Player;
-    private AGRESSOR_RADIUS = 100;
-    private attackHandler: () => void;
+    target: Player;
+    AGRESSOR_RADIUS = 100;
+    attackHandler: () => void;
     constructor(
         scene: Phaser.Scene,
         x: number,

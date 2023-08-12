@@ -28,6 +28,7 @@ export class Actor extends Physics.Arcade.Sprite {
         return this.hp;
     }
     protected checkFlip(): void {
+        if(!this.body) throw new Error(`Body can't be empty`)
         if (this.body.velocity.x < 0) {
             this.scaleX = -1;
         } else {
