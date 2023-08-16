@@ -1,6 +1,7 @@
 import './style.css'
 import { Game, Types } from 'phaser';
 import { Level1, LoadingScene, TestScene, UIScene } from './scenes';
+import { isMobile } from './helpers/platform';
 
 
 declare global {
@@ -53,6 +54,7 @@ export const GameConfig: GameConfigType = {
     scene: [LoadingScene, TestScene, Level1, UIScene],
 };
 
+if (isMobile()) window.screen.orientation.lock('landscape');
 
 window.sizeChanged = () => {
     if (window.game.isBooted) {

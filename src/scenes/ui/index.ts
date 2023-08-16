@@ -4,6 +4,7 @@ import { Text } from '../../classes/text';
 import { EVENTS_NAME, GameStatus } from '../../consts';
 import { GameConfig } from '../../main';
 import { Button } from '../../dom';
+import { isMobile } from '../../helpers/platform';
 export class UIScene extends Scene {
   chestLootHandler: () => void;
   score!: Score;
@@ -13,7 +14,7 @@ export class UIScene extends Scene {
   btnDown!: GameObjects.DOMElement;
   btnLeft!: GameObjects.DOMElement;
   btnRight!: GameObjects.DOMElement;
-  
+
   constructor() {
     super('ui-scene');
 
@@ -166,14 +167,14 @@ export class UIScene extends Scene {
     });
 
     this.add.dom(window.innerWidth - 50, window.innerHeight - 50, btnAttack).addListener('touchstart')
-    .on('touchstart', () => {
-      this.game.events.emit(EVENTS_NAME.btnAttack);
-    });
+      .on('touchstart', () => {
+        this.game.events.emit(EVENTS_NAME.btnAttack);
+      });
   }
 
   create(): void {
     this.score = new Score(this, 20, 20, 0);
-    this.initButton();
     this.initListeners();
+    if (isMobile()) this.initButton();
   }
 }
