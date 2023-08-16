@@ -54,7 +54,7 @@ export const GameConfig: GameConfigType = {
     scene: [LoadingScene, TestScene, Level1, UIScene],
 };
 
-if (isMobile()) window.screen.orientation.lock('landscape');
+// if (isMobile()) window.screen.orientation.lock('landscape');
 
 window.sizeChanged = () => {
     if (window.game.isBooted) {
