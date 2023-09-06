@@ -2,6 +2,9 @@
 This is my first game! 
 Have fun playing it.
 
+demo: [https://zero-first-game.vercel.app](https://zero-first-game.vercel.app)
+
+
 <!-- ## Setup
 ```bash
 yarn create next-app zero-first-game --typescript
