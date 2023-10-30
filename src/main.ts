@@ -1,7 +1,6 @@
 import './style.css'
 import { Game, Types } from 'phaser';
 import { Level1, LoadingScene, TestScene, UIScene } from './scenes';
-import { isMobile } from './helpers/platform';
 
 
 declare global {
