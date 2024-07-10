@@ -1,9 +1,10 @@
-## __Getting Started__
+## Zero First Game
 This is my first game! 
 Have fun playing it.
 
 demo: [https://zero-first-game.vercel.app](https://zero-first-game.vercel.app)
 
+__Tip__: In desktop browser use W-S-A-D key for move aroud and use SPACE key for hiting the enemy.
 
 <!-- ## Setup
 ```bash
